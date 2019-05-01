@@ -1,9 +1,11 @@
 //jshint esversion:6
+require('dotenv').config(); //Xrismopoieitai san prwto!! gia ta environments variables!
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require('mongoose');
 const encrypt =require("mongoose-encryption");
+
 
 const app = express();
 
@@ -14,10 +16,9 @@ const userSchema=new mongoose.Schema({
   password: String
 });
 
-///Gia thn kwdikopoihsh tou userSchema..
-//Prepei na mpei prin apo to create a model giati prepei na einai kwdikopoimeno!
-const secret ="Thisisourlittlesecret.";
-userSchema.plugin(encrypt,{secret:secret,encryptedFields : ["password"] });
+
+
+userSchema.plugin(encrypt,{secret: process.env.secret,encryptedFields : ["password"] });
 //To encrypted ginetai apo mono tou otan kaloume tin sinartisi .save()..
 //Enw to decrypt edw ginetai mmesa stin diadikasia find()..
 
